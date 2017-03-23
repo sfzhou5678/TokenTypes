@@ -98,5 +98,5 @@ def file_to_type(filepath):
         return ''
 
 
-filepath = r'../data/manager.py'
+filepath = r'../data/test.py'
 print(file_to_type(filepath))
