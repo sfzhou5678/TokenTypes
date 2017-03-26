@@ -9,8 +9,8 @@ class TestModel:
 
         output=weights
 
-        a=[]
-        q=tf.FIFOQueue(3,'float')
+        a=5
+        q=tf.FIFOQueue(30000,'float')
         self.init=q.enqueue_many(([1.,2.,3.]*10,))
 
         x=q.dequeue()
@@ -18,19 +18,22 @@ class TestModel:
 
         true_output=[]
 
-        # def fun1():
-        #
-        #     a.append(tf.constant(1))
-        #     return tf.constant(1)
-        #
-        #
-        # def fun2():
-        #     a.append(tf.constant(222))
-        #     return tf.constant(2)
-        #
-        # for i in range(4):
-        #     true_output.append(tf.cond(output[i] <= 2,lambda: fun1(),lambda :fun2()))
-        #     # true_output.append(tf.cond(output[3] <= 2,lambda: output[3],lambda: output[0]-10))
+        def fun1():
+            # a=q.dequeue()
+            # return tf.constant(1)
+            return q.dequeue()
+
+
+        def fun2():
+            # a=q.dequeue()
+            # return tf.constant(1)
+            return q.dequeue()
+
+        for i in range(4):
+            a=tf.cond(output[i] <= 2,lambda: fun1(),lambda :fun2())
+            # a=
+            # true_output.append(tf.cond(output[i] <= 2,lambda: fun1(),lambda :fun2()))
+            # true_output.append(tf.cond(output[3] <= 2,lambda: output[3],lambda: output[0]-10))
         self.output=true_output
         self.aaa=a
 
@@ -57,9 +60,12 @@ with tf.Session() as sess:
 
     vals = sess.run(fetches)
     print(vals['output'])
-    # print(vals['aaa'])
+    print(vals['aaa'])
+    print(vals['x'])
+
 
     vals = sess.run(fetches)
     print(vals['output'])
-    # print(vals['aaa'])
+    print(vals['aaa'])
+    print(vals['x'])
 
