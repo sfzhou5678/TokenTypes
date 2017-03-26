@@ -63,8 +63,8 @@ with open(save_path,'w') as wf:
         for line in f:
             handle_line(line, wf, max_words_length=100,record_time_step=None,isTerminalSet=is_terminal_set)
             count+=1
-            if count>10:
-                break
+            # if count>10:
+            #     break
 
 
 
