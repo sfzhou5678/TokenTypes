@@ -98,5 +98,5 @@ def file_to_type(filepath):
     except:
         return ''
 
-filepath = r'../data/manager.py'
+filepath = r'../data/test2.py'
 print(file_to_type(filepath))

@@ -1,71 +1,35 @@
-import ast
-import tensorflow as tf
 
-a=[[1,2,1,4],[11,2,1,4],[21,2,3,4],[31,2,3,4]]
+class Stack:
+    """模拟栈"""
+    def __init__(self):
+        self.items = []
 
-class TestModel:
-    def __init__(self,weights):
-        self.weights=weights
+    def isEmpty(self):
+        return len(self.items)==0
 
-        output=weights
+    def push(self, item):
+        # print("push")
+        self.items.append(item)
 
-        a=5
-        q=tf.FIFOQueue(30000,'float')
-        self.init=q.enqueue_many(([1.,2.,3.]*10,))
+    def pop(self):
+        # print("pop")
 
-        x=q.dequeue()
-        self.x=x
+        if not self.isEmpty():
+            return self.items.pop()
+        else:
+            print('NULL')
 
-        true_output=[]
+    def peek(self):
+        if not self.isEmpty():
+            return self.items[len(self.items)-1]
 
-        def fun1():
-            # a=q.dequeue()
-            # return tf.constant(1)
-            return q.dequeue()
-
-
-        def fun2():
-            # a=q.dequeue()
-            # return tf.constant(1)
-            return q.dequeue()
-
-        for i in range(4):
-            a=tf.cond(output[i] <= 2,lambda: fun1(),lambda :fun2())
-            # a=
-            # true_output.append(tf.cond(output[i] <= 2,lambda: fun1(),lambda :fun2()))
-            # true_output.append(tf.cond(output[3] <= 2,lambda: output[3],lambda: output[0]-10))
-        self.output=true_output
-        self.aaa=a
-
-q=tf.FIFOQueue(6000000,'float')
-init=q.enqueue_many((a,))
-weights=q.dequeue()
-
-testm=TestModel(weights)
-fetches = {
-    "output": testm.output,
-    "aaa":testm.aaa,
-    "x":testm.x
-}
-
-with tf.Session() as sess:
-    # # TODO init.run() 这个run不知道哪里运行
-    init.run()
-    sess.run(testm.init)
-
-    vals = sess.run(fetches)
-    print(vals['output'])
-    print(vals['aaa'])
-    print(vals['x'])
-
-    vals = sess.run(fetches)
-    print(vals['output'])
-    print(vals['aaa'])
-    print(vals['x'])
+    def size(self):
+        return len(self.items)
 
 
-    vals = sess.run(fetches)
-    print(vals['output'])
-    print(vals['aaa'])
-    print(vals['x'])
-
+s=Stack()
+a=("asdf",1)
+b=("bbbb",2)
+s.push(a)
+s.push(b)
+print(s.pop()[0])
